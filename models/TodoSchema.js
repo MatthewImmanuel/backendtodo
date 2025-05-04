@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const TodoSchema = new mongoose.Schema({
   task: {
     type: String,
-    required: [true, 'Task is required']
+    required: true
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
+  completed: {
+    type: Boolean,
+    default: false
   }
-});
+}, { timestamps: true });
 
-module.exports = mongoose.model('Todo', TodoSchema);
+module.exports = mongoose.models.Todo || mongoose.model('Todo', TodoSchema);
