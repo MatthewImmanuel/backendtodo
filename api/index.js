@@ -7,13 +7,11 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 let cachedDb = null;
 
@@ -32,6 +30,9 @@ async function connectToDatabase() {
   return connection;
 }
 
+app.get('/', (req, res) => {
+  res.status(200).send('Todo API is running');
+});
 
 app.post('/api/addTodo', async (req, res) => {
   try {
@@ -77,7 +78,6 @@ app.delete('/api/deleteTodo/:id', async (req, res) => {
   }
 });
 
-
 app.put('/api/updateTodo/:id', async (req, res) => {
   try {
     await connectToDatabase();
@@ -95,10 +95,13 @@ app.put('/api/updateTodo/:id', async (req, res) => {
 });
 
 
+app.use('*', (req, res) => {
+  res.status(200).send('Todo API is running. Use /api/todos to access the API.');
+});
+
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 4000;
   app.listen(PORT, () => console.log(`🚀 Server started at port: ${PORT}`));
 }
-
 
 module.exports = app;
