@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const Todo = require('../models/TodoSchema');
+const Todo = require('./models/TodoSchema');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -62,3 +62,4 @@ app.delete('/deleteTodo/:id', async (req, res) => {
   }
 });
 
+app.listen(PORT, () => console.log(`🚀 Server started at port: ${PORT}`));
