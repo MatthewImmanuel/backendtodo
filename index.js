@@ -6,7 +6,16 @@ const serverless = require('serverless-http')
 const Todo = require('./models/TodoSchema')
 
 const app = express()
-app.use(cors({ origin: '*' }))
+
+app.use(cors({
+  origin: [
+    'https://frontendtodo-p35j.vercel.app',
+    'http://localhost:3000'
+  ],
+  methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
+  credentials: true
+}))
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
